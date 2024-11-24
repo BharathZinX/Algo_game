@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoJumble Login & Registration</title>
+    <style>
+        /* CSS remains the same */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: rgb(123, 138, 135);
+background: radial-gradient(circle, rgba(56,130,117,1) 0%, rgba(32,154,186,1) 50%, rgba(0,0,0,1) 100%);
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
+            width: 400px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        .container input[type="text"],
+        .container input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #000000;
+            outline: none;
+        }
+        .container input[type="text"]::placeholder,
+        .container input[type="password"]::placeholder {
+            color: #d0d0d0;
+        }
+        .container button {
+            width: 90%;
+            padding: 10px;
+            background: rgba(0, 123, 255, 0.8);
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .container button:hover {
+            background: rgba(0, 123, 255, 1);
+        }
+        .switch {
+            margin-top: 10px;
+            cursor: pointer;
+            color: #ffffff;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+        .error {
+            font-size: 14px;
+            color: #ff4b4b;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <h2>Login to AlgoJumble</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginError" class="error">Invalid credentials. Try again!</p>
+        <p class="switch" id="showRegister">New user? Register here</p>
+    </div>
+
+    <div class="container" id="registerContainer" style="display: none;">
+        <h2>Register for AlgoJumble</h2>
+        <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Choose a Username" required>
+            <input type="password" id="registerPassword" placeholder="Choose a Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <p id="registerError" class="error">Registration failed. Try again!</p>
+        <p class="switch" id="showLogin">Already have an account? Login here</p>
+    </div>
+
+    <script>
+        const loginContainer = document.getElementById('loginContainer');
+        const registerContainer = document.getElementById('registerContainer');
+        const showRegister = document.getElementById('showRegister');
+        const showLogin = document.getElementById('showLogin');
+
+        showRegister.addEventListener('click', () => {
+            loginContainer.style.display = 'none';
+            registerContainer.style.display = 'block';
+        });
+
+        showLogin.addEventListener('click', () => {
+            registerContainer.style.display = 'none';
+            loginContainer.style.display = 'block';
+        });
+
+        // Save and Retrieve Users from Local Storage
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users')) || [];
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const loginError = document.getElementById('loginError');
+
+            const users = getUsers();
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+               // alert(`Welcome back, ${username}!`);
+                window.location.href = "index.html";
+            } else {
+                loginError.style.display = 'block';
+            }
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const registerError = document.getElementById('registerError');
+
+            const users = getUsers();
+            if (users.find(user => user.username === username)) {
+                registerError.textContent = "Username already exists!";
+                registerError.style.display = 'block';
+            } else {
+                users.push({ username, password });
+                saveUsers(users);
+                alert("Registration successful! Please login to continue.");
+                registerContainer.style.display = 'none';
+                loginContainer.style.display = 'block';
+            }
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+        });
+    </script>
+</body>
+</html>
