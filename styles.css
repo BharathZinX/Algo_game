@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: rgb(143,143,143);
+background: radial-gradient(circle, rgba(143,143,143,1) 21%, rgba(0, 210, 193, 0.737) 73%, rgba(4,0,0,1) 100%);
     margin: 0;
     display: grid;
     justify-content: center;
@@ -9,11 +10,17 @@ body {
 }
 
 .container {
-    background: white;
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white background */
+    border-radius: 15px;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 600px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    backdrop-filter: blur(10px); /* Frosted-glass blur */
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Border to enhance glass effect */
+    text-align: center;
+    color: #333;
 }
 
 h1 {
@@ -25,6 +32,7 @@ h1 {
     text-align: center;
     font-size: 1.2em;
     margin-bottom: 20px;
+    color: #ffffff;
 }
 
 .quiz {
@@ -37,7 +45,7 @@ ul {
 }
 
 li {
-    background: #e2e2e2;
+    background: #ffffff;
     margin: 5px 0;
     padding: 10px;
     border-radius: 4px;
@@ -47,7 +55,7 @@ li {
 button {
     margin-top: 20px;
     padding: 10px;
-    background: #28a745;
+    background: #0974ffb8;
     color: white;
     border: none;
     border-radius: 4px;
@@ -58,7 +66,7 @@ button {
 }
 
 button:hover {
-    background: #218838;
+    background:#f17373;
 }
 
 #result-message {
